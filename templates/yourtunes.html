@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>YourTunes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/yourtunes.css') }}" />
     <link rel="icon" href="{{ url_for('static', filename='image/logo.ico') }}" type="image/x-icon">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/framer-motion@4.1.17/dist/framer-motion.js"></script>
     
 </head>
 <body>
@@ -12,8 +22,20 @@
     </a>
 
     <h1 class="h1">Music's in the mix! Tap play and turn up!</h1>
+    <audio autoplay loop id="player" src="{{ url_for('static', filename='bg/bg.mp3') }}"></audio>
 
+    <div class="player-bg">
+        <button id="play-pause-button" class="player-button" aria-label="Play">▶️</button>
+    </div>
+
+    <div class="note" style="left: 20%; animation-duration: 4s">♪</div>
+    <div class="note" style="left: 40%; animation-duration: 5s">♬</div>
+    <div class="note" style="left: 60%; animation-duration: 6s">♫</div>
+    <div class="note" style="left: 80%; animation-duration: 7s">♩</div>
+
+    
     <script>
+
       function getPlaylistIdFromUrl(playlist_url) {
         if (playlist_url.includes("open.spotify.com/playlist/")) {
           const playlistId = playlist_url.split("open.spotify.com/playlist/")[1].split("?")[0];
@@ -42,8 +64,77 @@
         document.body.appendChild(errorMessage);
       }
 
-
+      const notes = document.querySelectorAll(".note");
+      notes.forEach((note) => {
+        note.style.animationDuration = `${Math.random() * 3 + 3}s`;
+        note.style.left = `${Math.random() * 100}vw`;
+      });
       </script>
 
+    <div class="music">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      
+    </div>
+
+    <div id="mood-list">
+      {% if mood_results %}
+          {% for mood, percentage in mood_results.items() %}
+              <div class="progress-container">
+                  <div class="circular-progress" style="--percentage: {{ percentage }};">
+                      <div class="progress-value">{{ percentage|round(1) }}%</div>
+                  </div>
+                  <div class="mood-label">{{ mood }}</div>
+              </div>
+          {% endfor %}
+      {% else %}
+          <p>No mood data available.</p>
+      {% endif %}
+      <script>
+        const player = document.getElementById('player');
+    const playPauseButton = document.getElementById('play-pause-button');
+
+    function updateButton() {
+        if (player.paused) {
+            playPauseButton.textContent = '▶️'; 
+            playPauseButton.setAttribute('aria-label', 'Play');
+        } else {
+            playPauseButton.textContent = '⏸️'; 
+            playPauseButton.setAttribute('aria-label', 'Pause');
+        }
+    }
+
+    playPauseButton.addEventListener('click', () => {
+        if (player.paused) {
+            player.play();
+        } else {
+            player.pause();
+        }
+        updateButton();
+    });
+
+    player.addEventListener('ended', updateButton);
+
+    updateButton()
+      </script>
+  </div>
 </body>
 </html>
