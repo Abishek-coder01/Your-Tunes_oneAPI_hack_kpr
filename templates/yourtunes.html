@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>YourTunes</title>
+    <link rel="icon" href="{{ url_for('static', filename='image/logo.ico') }}" type="image/x-icon">
+
+    
+</head>
+<body>
+    <a href="{{ url_for('home') }}">
+      <button class="home-btn">🏠︎ Home</button>
+    </a>
+
+    <h1 class="h1">Music's in the mix! Tap play and turn up!</h1>
+
+    <script>
+      function getPlaylistIdFromUrl(playlist_url) {
+        if (playlist_url.includes("open.spotify.com/playlist/")) {
+          const playlistId = playlist_url.split("open.spotify.com/playlist/")[1].split("?")[0];
+          return playlistId;
+        } else {
+          return null;
+        }
+      }
+
+      const playlistId = getPlaylistIdFromUrl("{{ playlist_url }}");
+
+      if (playlistId) {
+        const embedUrl = `https://open.spotify.com/embed/playlist/${playlistId}`;
+        const iframe = document.createElement("iframe");
+        iframe.src = embedUrl;
+        iframe.width = "45%";
+        iframe.height = "70%";
+        iframe.frameBorder = "0";
+        iframe.allowTransparency = "true";
+        iframe.allow = "encrypted-media";
+
+        document.body.appendChild(iframe); 
+      } else {
+        const errorMessage = document.createElement("p");
+        errorMessage.textContent = "Invalid Spotify playlist URL.";
+        document.body.appendChild(errorMessage);
+      }
+
+
+      </script>
+
+</body>
+</html>
