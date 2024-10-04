@@ -12,10 +12,8 @@
     </a>
 
     <h1 class="h1">Music's in the mix! Tap play and turn up!</h1>
-    <audio autoplay loop id="player" src="{{ url_for('static', filename='bg/bg.mp3') }}"></audio>
 
     <script>
-
       function getPlaylistIdFromUrl(playlist_url) {
         if (playlist_url.includes("open.spotify.com/playlist/")) {
           const playlistId = playlist_url.split("open.spotify.com/playlist/")[1].split("?")[0];
