@@ -17,6 +17,7 @@
     
 </head>
 <body>
+    <!-- Home button -->
     <a href="{{ url_for('home') }}">
       <button class="home-btn">🏠︎ Home</button>
     </a>
@@ -24,10 +25,12 @@
     <h1 class="h1">Music's in the mix! Tap play and turn up!</h1>
     <audio autoplay loop id="player" src="{{ url_for('static', filename='bg/bg.mp3') }}"></audio>
 
+    <!-- Player Button Positioned at Bottom Right -->
     <div class="player-bg">
         <button id="play-pause-button" class="player-button" aria-label="Play">▶️</button>
     </div>
 
+    <!-- Animated musical notes -->
     <div class="note" style="left: 20%; animation-duration: 4s">♪</div>
     <div class="note" style="left: 40%; animation-duration: 5s">♬</div>
     <div class="note" style="left: 60%; animation-duration: 6s">♫</div>
@@ -36,6 +39,7 @@
     
     <script>
 
+      // Function to extract playlist ID from Spotify URL
       function getPlaylistIdFromUrl(playlist_url) {
         if (playlist_url.includes("open.spotify.com/playlist/")) {
           const playlistId = playlist_url.split("open.spotify.com/playlist/")[1].split("?")[0];
@@ -45,8 +49,10 @@
         }
       }
 
+      // Get the playlist ID from the URL passed in
       const playlistId = getPlaylistIdFromUrl("{{ playlist_url }}");
 
+      // If a valid playlist ID exists, create an iframe for embedding
       if (playlistId) {
         const embedUrl = `https://open.spotify.com/embed/playlist/${playlistId}`;
         const iframe = document.createElement("iframe");
@@ -57,13 +63,15 @@
         iframe.allowTransparency = "true";
         iframe.allow = "encrypted-media";
 
-        document.body.appendChild(iframe); 
+        document.body.appendChild(iframe);  // Append iframe to body
       } else {
+        // Display error message if the playlist URL is invalid
         const errorMessage = document.createElement("p");
         errorMessage.textContent = "Invalid Spotify playlist URL.";
         document.body.appendChild(errorMessage);
       }
 
+      // Animate musical notes
       const notes = document.querySelectorAll(".note");
       notes.forEach((note) => {
         note.style.animationDuration = `${Math.random() * 3 + 3}s`;
@@ -71,6 +79,7 @@
       });
       </script>
 
+<!-- Visual representation of music bars -->
     <div class="music">
       <div class="bar"></div>
       <div class="bar"></div>
@@ -112,16 +121,18 @@
         const player = document.getElementById('player');
     const playPauseButton = document.getElementById('play-pause-button');
 
+    // Update button icon based on player state
     function updateButton() {
         if (player.paused) {
-            playPauseButton.textContent = '▶️'; 
+            playPauseButton.textContent = '▶️'; // Play icon
             playPauseButton.setAttribute('aria-label', 'Play');
         } else {
-            playPauseButton.textContent = '⏸️'; 
+            playPauseButton.textContent = '⏸️'; // Pause icon
             playPauseButton.setAttribute('aria-label', 'Pause');
         }
     }
 
+    // Event listener for the button
     playPauseButton.addEventListener('click', () => {
         if (player.paused) {
             player.play();
@@ -131,8 +142,10 @@
         updateButton();
     });
 
+    // Update button when audio ends (if not looping)
     player.addEventListener('ended', updateButton);
 
+    // Ensure the button reflects the correct state on page load
     updateButton()
       </script>
   </div>

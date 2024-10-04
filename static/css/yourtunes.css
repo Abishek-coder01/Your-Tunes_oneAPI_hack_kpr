@@ -180,6 +180,7 @@ body {
           color: #fff;
       }
 
+      /* Home button style */
       .home-btn {
           position: absolute;
           top: 10px;
@@ -195,6 +196,7 @@ body {
           transform: scale(1.1);
       }
 
+      /* Music bars and heading adjustments */
       .music {
         margin: 30px auto;
         display: flex;
@@ -206,8 +208,8 @@ body {
     }
     
     .bar {
-        width: 6px;  
-        margin: 0 2px;  
+        width: 6px;  /* Increased from 2px to 6px */
+        margin: 0 2px;  /* Increased from 1px to 2px on each side */
         background-color: #ffffff;
         animation: waveform 1.5s ease-in-out infinite;
     }
@@ -221,6 +223,7 @@ body {
         }
     }
     
+    /* Define 20 different height variations */
     .bar:nth-child(20n + 1) { --min-height: 5px; --max-height: 30px; }
     .bar:nth-child(20n + 2) { --min-height: 8px; --max-height: 40px; }
     .bar:nth-child(20n + 3) { --min-height: 12px; --max-height: 50px; }
@@ -242,7 +245,7 @@ body {
     .bar:nth-child(20n + 19) { --min-height: 10px; --max-height: 48px; }
     .bar:nth-child(20n + 20) { --min-height: 13px; --max-height: 58px; }
     
-   
+    /* Define 5 animation delay variations */
     .bar:nth-child(5n + 1) { animation-delay: 0s; }
     .bar:nth-child(5n + 2) { animation-delay: 0.3s; }
     .bar:nth-child(5n + 3) { animation-delay: 0.6s; }
@@ -270,10 +273,10 @@ body {
         transform: scale(1.1);
     }
 
-    
+    /* Custom CSS for player-bg positioning */
     .player-bg {
         position: fixed;
         bottom: 20px;
         right: 20px;
-        z-index: 1000; 
+        z-index: 1000; /* Ensures the button stays above other elements */
     }

@@ -1,6 +1,7 @@
-  const moodResults = {{ mood_results | tojson }};
+  // Mood results rendering
+  const moodResults = {{ mood_results | tojson }}; // Passed from Flask as JSON
   const moodList = document.getElementById("mood-list");
-  moodList.innerHTML = ""; 
+  moodList.innerHTML = ""; // Clear previous entries
 
   for (const [mood, percentage] of Object.entries(moodResults)) {
     const progressContainer = document.createElement("div");
@@ -18,12 +19,14 @@
     moodLabel.classList.add("mood-label");
     moodLabel.innerText = mood;
 
+    // Append elements to progress container
     progressContainer.appendChild(circularProgress);
     progressContainer.appendChild(progressValue);
     progressContainer.appendChild(moodLabel);
     moodList.appendChild(progressContainer);
 
-    circularProgress.offsetWidth; 
-    circularProgress.classList.add("animate"); 
+    // Trigger reflow to ensure animation runs
+    circularProgress.offsetWidth; // Force reflow
+    circularProgress.classList.add("animate"); // Add animation class
   }
 });
