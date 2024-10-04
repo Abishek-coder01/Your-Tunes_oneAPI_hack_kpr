@@ -89,3 +89,10 @@ def get_songs_of_artist(token, artist_id):
     result = get(url, headers=headers)
     json_result = json.loads(result.content)["tracks"]
     return json_result
+
+@app.route('/')
+def login():
+    return "i did it i made the flask app"
+
+if __name__ == '__main__':
+    app.run(debug=True)
